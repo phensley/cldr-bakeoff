@@ -16,7 +16,7 @@ The i18n formatting requirements are:
  * Support 4 currencies: USD, EUR, GBP, and JPY.
  * Numbers in decimal and percent format.
  * Date and time formats, in Gregorian calendar only.
- * Support users speaking English, French, German, Italian, Japanese, Korean, Portuguese, and Spanish.
+ * Support users speaking English, French, German, Italian, Japanese, Korean, Chinese, Portuguese, and Spanish.
  * Users can be anywhere in the world, so we try to support all regions for each language.
  * Optional time zones.
    - We'll assume our users are all over the world, and time will be localized.
@@ -38,4 +38,7 @@ The i18n formatting requirements are:
 | en, es, fr, de | 2,314,347 | 2,353,583 | 113,279 |
 | en, es, fr, de, it | 2,364,240 | 2,404,448 | 116,312 |
 | en, es, fr, de, it, pt | 2,515,656 | 2,559,308 | 123,755 |
+| en, es, fr, de, it, pt, ja | 2,526,245 | 2,570,455 | 124,870 |
+| en, es, fr, de, it, pt, ja, ko | 2,547,796 | 2,592,982 | 126,646 |
+| en, es, fr, de, it, pt, ja, ko, zh | 2,635,912 | 2,684,716 | 131,798 |
 | en + &lt;all timezones&gt; | 73,543,199 | 73,557,03 | 8,573,916 |
