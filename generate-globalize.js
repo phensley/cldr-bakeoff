@@ -157,3 +157,6 @@ for (let i = 0; i < LANGS.length; i++) {
 
 // one with timezones
 compile(['en'], true);
+
+// all locales + timezones
+compile(LANGS, true);

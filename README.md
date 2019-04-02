@@ -24,21 +24,53 @@ The i18n formatting requirements are:
 
 ### Globalize
 
-[Globalize.js](https://github.com/globalizejs/globalize) example [code generator](./generate-globalize.js)
+[Github](https://github.com/globalizejs/globalize) - [NPM](https://www.npmjs.com/package/globalize)
 
-**Note: the sizes below do not include the runtime libraries** - this is just the generated code that patches selected data into the library and constructs formatter instances.
+Sizes are generated using `globalize 1.4.2`, `globalize-compiler 1.0.0` and `cldr v34` data.
+
+Example [code generator](./generate-globalize.js) strictly includes only the code and data required to support the above requirements. When any requirements are added or removed this code must be regenerated.
+
+I've also bundled all locales into a single JavaScript file. Applications that require languages or locales to be loaded individually would have to implement more logic to ensure the common code is shared among all locales, to minimize the overhead.
+
+**Note:** the sizes below *do not* include the runtime libraries - this is just the generated code that patches selected data into the library and constructs formatter instances.
+
+Adding all timezone identifiers massively increases the generated data to the point that a developer should probably switch to a different strategy of using Globalize, or find an alternative way of including timezone data.
 
 ##### Output
 
-| Languages&nbsp;(all&nbsp;regions) | Characters | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
+| Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
 | :--- | ---: | ---: | ---: |
-| en  | 1,299,289 | 1,313,128 | 63,451 |
-| en, es | 1,649,821 | 1,670,161 | 81,784 |
-| en, es, fr | 2,225,410 | 2,262,680 | 108,481 |
-| en, es, fr, de | 2,314,347 | 2,353,583 | 113,279 |
-| en, es, fr, de, it | 2,364,240 | 2,404,448 | 116,312 |
-| en, es, fr, de, it, pt | 2,515,656 | 2,559,308 | 123,755 |
-| en, es, fr, de, it, pt, ja | 2,526,245 | 2,570,455 | 124,870 |
-| en, es, fr, de, it, pt, ja, ko | 2,547,796 | 2,592,982 | 126,646 |
-| en, es, fr, de, it, pt, ja, ko, zh | 2,635,912 | 2,684,716 | 131,798 |
-| en + &lt;all timezones&gt; | 73,543,199 | 73,557,03 | 8,573,916 |
+| en  | 1,313,128 | 63,451 |
+| en, es | 1,670,161 | 81,784 |
+| en, es, fr | 2,262,680 | 108,481 |
+| en, es, fr, de | 2,353,583 | 113,279 |
+| en, es, fr, de, it | 2,404,448 | 116,312 |
+| en, es, fr, de, it, pt | 2,559,308 | 123,755 |
+| en, es, fr, de, it, pt, ja | 2,570,455 | 124,870 |
+| en, es, fr, de, it, pt, ja, ko | 2,592,982 | 126,646 |
+| en, es, fr, de, it, pt, ja, ko, zh | 2,684,716 | 131,798 |
+| en + &lt;all timezones&gt; | 73,557,038 | 8,573,916 |
+| en, es, fr, de, it, pt, ja, ko, zh<br> + &lt; all timezones&gt; | 148,572,401 | 17,388,065 |
+
+### @phensley/cldr
+
+[Github](https://github.com/phensley/cldr-engine) - [NPM](https://www.npmjs.com/package/@phensley/cldr)
+
+This library has a somewhat different design. It consists of a single runtime library and a resource pack per language. English would be contained in `en.json.gz` for example. Resource packs are intended to be loaded into the browser separately at runtime, so I've indicated their sizes separately below.
+
+**Note:** The runtime library includes all CLDR functionality that is implemented, and each resource pack contains all data required for all scripts and regions for a single language, including **all timezones, all units, names, multiple calendars, and more**. No build time data extraction or pre-compilation steps are required.
+
+Sizes are generated using `@phensley/cldr 0.11.2-alpha.0` which uses `cldr v35` data.
+
+| Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
+| :--- | ---: | ---: | ---: |
+| @phensley/cldr library | 339,725 | 114,941 |
+| English resource pack | 199,507 | 44,058 |
+| Spanish resource pack | 180,332 | 43,691 |
+| French resource pack | 164,791 | 37,085 |
+| German resource pack | 139,707 | 23,492 |
+| Italian resource pack | 130,008 | 22,282 |
+| Portuguese resource pack | 173,927 | 38,894 |
+| Japanese resource pack | 138,765 | 20,628 |
+| ko.json resource pack | 132,312 | 23,768 |
+| zh.json resource pack | 270,318 | 53,570 |
