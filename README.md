@@ -60,11 +60,11 @@ This library has a somewhat different design. It consists of a single runtime li
 
 **Note:** The runtime library includes all CLDR functionality that is implemented, and each resource pack contains all data required for all scripts and regions for a single language, including **all timezones, all units, names, multiple calendars, and more**. No build time data extraction or pre-compilation steps are required.
 
-Sizes are generated using `@phensley/cldr 0.11.2-alpha.0` which uses `cldr v35` data.
+Sizes are generated using `@phensley/cldr 0.11.3-alpha.0` which uses `cldr v35` data.
 
 | Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
 | :--- | ---: | ---: |
-| @phensley/cldr library | 339,725 | 114,941 |
+| @phensley/cldr library | 338,524 | 114,262 |
 | English resource pack | 199,507 | 44,058 |
 | Spanish resource pack | 180,332 | 43,691 |
 | French resource pack | 164,791 | 37,085 |
