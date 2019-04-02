@@ -39,7 +39,7 @@ Adding all timezone identifiers massively increases the generated data to the po
 ##### Output
 
 | Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
-| :--- | ---: | ---: | ---: |
+| :--- | ---: | ---: |
 | en  | 1,313,128 | 63,451 |
 | en, es | 1,670,161 | 81,784 |
 | en, es, fr | 2,262,680 | 108,481 |
@@ -63,7 +63,7 @@ This library has a somewhat different design. It consists of a single runtime li
 Sizes are generated using `@phensley/cldr 0.11.2-alpha.0` which uses `cldr v35` data.
 
 | Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
-| :--- | ---: | ---: | ---: |
+| :--- | ---: | ---: |
 | @phensley/cldr library | 339,725 | 114,941 |
 | English resource pack | 199,507 | 44,058 |
 | Spanish resource pack | 180,332 | 43,691 |
