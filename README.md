@@ -72,5 +72,5 @@ Sizes are generated using `@phensley/cldr 0.11.2-alpha.0` which uses `cldr v35` 
 | Italian resource pack | 130,008 | 22,282 |
 | Portuguese resource pack | 173,927 | 38,894 |
 | Japanese resource pack | 138,765 | 20,628 |
-| ko.json resource pack | 132,312 | 23,768 |
-| zh.json resource pack | 270,318 | 53,570 |
+| Korean resource pack | 132,312 | 23,768 |
+| Chinese resource pack | 270,318 | 53,570 |
