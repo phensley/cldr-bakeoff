@@ -96,6 +96,19 @@ const build = (withtz) => {
   return s;
 };
 
+const buildLite = () => {
+  let s = '';
+  s += makeDateFormatter({ date: 'long' });
+  s += makeDateFormatter({ time: 'long' });
+  s += makeNumberFormatter({});
+  CURRENCIES.forEach(code => {
+    s += makeCurrencyFormatter(code, {});
+  });
+  s += makeUnitFormatter('megabyte', {});
+  return s;
+};
+
+
 const HEADER = `
 import Globalize from 'globalize/dist/globalize-runtime';
 `;
@@ -104,18 +117,18 @@ const FOOTER = `
 export default Globalize;
 `;
 
-const compile = (langs, withtz) => {
+
+const compile = (name, langs, source) => {
   const outdir = join(__dirname, 'globalize-output');
   if (!fs.existsSync(outdir)) {
     fs.mkdirSync(outdir);
   }
 
-  const source = build(withtz);
-  let path = join(outdir, `source-tz-${withtz}.js`);
-  fs.writeFileSync(path, source, { encoding: 'utf-8' });
+  let path = join(outdir, `source-${source.name}.js`);
+  fs.writeFileSync(path, source.code, { encoding: 'utf-8' });
 
   const start = process.hrtime();
-  const extracts = compiler.extract(source);
+  const extracts = compiler.extract(source.code);
   const locales = getlocales(new Set(langs));
 
   let res = HEADER;
@@ -133,30 +146,51 @@ const compile = (langs, withtz) => {
 
   const secs = elapsed[0] + (elapsed[1] / 1e9);
 
-  path = join(outdir, `compiled-${langs.join('_')}-tz-${withtz}.js`);
+  path = join(outdir, `compiled-${source.name}-${name}.js`);
   fs.writeFileSync(path, res, { encoding: 'utf-8' });
 
-  console.log(`languages: ${langs.join(', ')} ${withtz ? '+ all timezones' : ''}`);
+  console.log(`languages: ${langs.join(', ')} ${source.name}`);
   console.log(` compile ${secs} secs`);
   console.log(`    size ${decimal(res.length)} characters  ${decimal(buf.length)} bytes`);
 
   const data = zlib.gzipSync(buf, { level: zlib.constants.Z_BEST_COMPRESSION });
   console.log(`    gzip ${decimal(data.length)} bytes\n`);
 
-  path = join(outdir, `compiled-${langs.join('_')}-tz-${withtz}.js.gz`);
+  path = join(outdir, `compiled-${source.name}-${name}.js.gz`);
   fs.writeFileSync(path, data, { encoding: 'binary' });
 };
 
 const getlocales = (langs) =>
   ALL_LOCALES.filter(l => langs.has(l.split('-')[0]));
 
-for (let i = 0; i < LANGS.length; i++) {
-  const langs = LANGS.slice(0, i + 1);
-  compile(langs, false);
+const LITE = true;
+
+if (LITE) {
+  const code = buildLite();
+  const source = { name: 'lite', code };
+  for (let i = 0; i < LANGS.length; i++) {
+    const langs = LANGS.slice(0, i + 1);
+    const name = langs.join('_')
+    compile(name, langs, source);
+  }
+
+  const allset = new Set(ALL_LOCALES.filter(l => l !== 'root').map(l => l.split('-')[0]));
+  let alllangs = [];
+  allset.forEach(l => alllangs.push(l));
+  compile('all', alllangs, source);
+
+} else {
+  let source = { name: 'example-app', code: build(false) };
+  for (let i = 0; i < LANGS.length; i++) {
+    const langs = LANGS.slice(0, i + 1);
+    const name = langs.join('_')
+    compile(name, langs, source);
+  }
+
+  source = { name: 'example-app-tz', code: build(true) };
+  // one with timezones
+  compile('en', ['en'], source);
+
+  // all locales + timezones
+  compile(LANGS.join('_'), LANGS, source);
 }
-
-// one with timezones
-compile(['en'], true);
-
-// all locales + timezones
-compile(LANGS, true);

@@ -7,7 +7,7 @@ Comparisons of frontend libaries that provide i18n features using CLDR data.
 
 Goal is to compare i18n libraries using some very basic requirements for a real-world application.
 
-The theoretical application is designed to allow users to share files with one another, and possibly pay to purchase them. They need to see file sizes, date and times, currency amounts, etc. Download progress needs to show transferred file size and percent complete. Users can use one of 4 currencies to transact.
+The theoretical example application is designed to allow users to share files with one another, and possibly pay to purchase them. They need to see file sizes, date and times, currency amounts, etc. Download progress needs to show transferred file size and percent complete. Users can use one of 4 currencies to transact.
 
 The i18n formatting requirements are:
 
@@ -36,27 +36,101 @@ I've also bundled all locales into a single JavaScript file. Applications that r
 
 Adding all timezone identifiers massively increases the generated data to the point that a developer should probably switch to a different strategy of using Globalize, or find an alternative way of including timezone data.
 
-##### Output
+The generated code compresses well (20x) due to the high amount of duplication.
+
+##### Sizes of generated code for example application
+
+Source code (minus timezones):
+```javascript
+Globalize.unitFormatter('bit', {form: "short", compact: "short"});
+Globalize.unitFormatter('bit', {form: "long"});
+Globalize.unitFormatter('byte', {form: "short", compact: "short"});
+Globalize.unitFormatter('byte', {form: "long"});
+Globalize.unitFormatter('gigabit', {form: "short", compact: "short"});
+Globalize.unitFormatter('gigabit', {form: "long"});
+Globalize.unitFormatter('gigabyte', {form: "short", compact: "short"});
+Globalize.unitFormatter('gigabyte', {form: "long"});
+Globalize.unitFormatter('kilobit', {form: "short", compact: "short"});
+Globalize.unitFormatter('kilobit', {form: "long"});
+Globalize.unitFormatter('kilobyte', {form: "short", compact: "short"});
+Globalize.unitFormatter('kilobyte', {form: "long"});
+Globalize.unitFormatter('megabit', {form: "short", compact: "short"});
+Globalize.unitFormatter('megabit', {form: "long"});
+Globalize.unitFormatter('megabyte', {form: "short", compact: "short"});
+Globalize.unitFormatter('megabyte', {form: "long"});
+Globalize.unitFormatter('terabit', {form: "short", compact: "short"});
+Globalize.unitFormatter('terabit', {form: "long"});
+Globalize.unitFormatter('terabyte', {form: "short", compact: "short"});
+Globalize.unitFormatter('terabyte', {form: "long"});
+Globalize.dateFormatter({datetime: "full"});
+Globalize.dateFormatter({date: "long"});
+Globalize.dateFormatter({time: "full"});
+Globalize.currencyFormatter('USD', {style: "symbol"});
+Globalize.currencyFormatter('USD', {compact: "short"});
+Globalize.currencyFormatter('EUR', {style: "symbol"});
+Globalize.currencyFormatter('EUR', {compact: "short"});
+Globalize.currencyFormatter('GBP', {style: "symbol"});
+Globalize.currencyFormatter('GBP', {compact: "short"});
+Globalize.currencyFormatter('JPY', {style: "symbol"});
+Globalize.currencyFormatter('JPY', {compact: "short"});
+Globalize.numberFormatter({style: "decimal"});
+Globalize.numberFormatter({style: "percent"});
+```
 
 | Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
 | :--- | ---: | ---: |
 | en  | 1,313,128 | 63,451 |
-| en, es | 1,670,161 | 81,784 |
-| en, es, fr | 2,262,680 | 108,481 |
-| en, es, fr, de | 2,353,583 | 113,279 |
-| en, es, fr, de, it | 2,404,448 | 116,312 |
-| en, es, fr, de, it, pt | 2,559,308 | 123,755 |
-| en, es, fr, de, it, pt, ja | 2,570,455 | 124,870 |
-| en, es, fr, de, it, pt, ja, ko | 2,592,982 | 126,646 |
-| en, es, fr, de, it, pt, ja, ko, zh | 2,684,716 | 131,798 |
+| en + es | 1,670,161 | 81,784 |
+| en + es + fr | 2,262,680 | 108,481 |
+| en + es + fr + de | 2,353,583 | 113,279 |
+| en + es + fr + de + it | 2,404,448 | 116,312 |
+| en + es + fr + de + it + pt | 2,559,308 | 123,755 |
+| en + es + fr + de + it + pt + ja | 2,570,455 | 124,870 |
+| en + es + fr + de + it + pt + ja + ko | 2,592,982 | 126,646 |
+| en + es + fr + de + it + pt + ja + ko + zh | 2,684,716 | 131,798 |
 | en + &lt;all timezones&gt; | 73,557,038 | 8,573,916 |
-| en, es, fr, de, it, pt, ja, ko, zh<br> + &lt; all timezones&gt; | 148,572,401 | 17,388,065 |
+| en + es + fr + de + it + pt + ja + ko + zh<br> + &lt; all timezones&gt; | 148,572,401 | 17,388,065 |
+
+##### Sizes for stripped down "lite" example application
+
+Reducing the example application requirements drastically, to a point where there may not be an advantage to using a dedicated i18n library:
+
+ * One date, time, unit (megabyte) and number formatter
+ * One formatter per currency
+ * No timezones.
+
+Source code:
+```javascript
+Globalize.dateFormatter({date: "long"});
+Globalize.dateFormatter({time: "long"});
+Globalize.numberFormatter({});
+Globalize.currencyFormatter('USD', {});
+Globalize.currencyFormatter('EUR', {});
+Globalize.currencyFormatter('GBP', {});
+Globalize.currencyFormatter('JPY', {});
+Globalize.unitFormatter('megabyte', {});
+```
+
+| Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
+| :--- | ---: | ---: |
+| en | 398,389 | 22,121 |
+| en + es | 504,335 | 28,396 |
+| en + es + fr | 679,555 | 37,451 |
+| en + es + fr + de | 706,102 | 39,107 |
+| en + es + fr + de + it | 721,357 | 40,260 |
+| en + es + fr + de + it + pt | 767,507 | 42,835 |
+| en + es + fr + de + it + pt + ja | 770,959 | 43,195 |
+| en + es + fr + de + it + pt + ja + ko | 778,038 | 43,746 |
+| en + es + fr + de + it + pt + ja + ko + zh | 806,628 | 45,595 |
+| all locales | 1,421,762 | 94,458 |
 
 ### @phensley/cldr
 
 [Github](https://github.com/phensley/cldr-engine) - [NPM](https://www.npmjs.com/package/@phensley/cldr)
 
 This library has a somewhat different design. It consists of a single runtime library and a resource pack per language. English would be contained in `en.json.gz` for example. Resource packs are intended to be loaded into the browser separately at runtime, so I've indicated their sizes separately below.
+
+The sizes below would be identical for any application.
 
 **Note:** The runtime library includes all CLDR functionality that is implemented, and each resource pack contains all data required for all scripts and regions for a single language, including **all timezones, all units, names, multiple calendars, and more**. No build time data extraction or pre-compilation steps are required.
 
