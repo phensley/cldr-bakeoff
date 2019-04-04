@@ -38,7 +38,7 @@ Adding all timezone identifiers massively increases the generated data to the po
 
 The generated code compresses well (20x) due to the high amount of duplication.
 
-##### Sizes of generated code for example application
+#### Sizes of generated code for example application
 
 Source code (minus timezones):
 ```javascript
@@ -91,7 +91,7 @@ Globalize.numberFormatter({style: "percent"});
 | en + &lt;all timezones&gt; | 73,557,038 | 8,573,916 |
 | en + es + fr + de + it + pt + ja + ko + zh<br> + &lt; all timezones&gt; | 148,572,401 | 17,388,065 |
 
-##### Sizes for stripped down "lite" example application
+#### Sizes for stripped down "lite" example application
 
 Reducing the example application requirements drastically, to a point where there may not be an advantage to using a dedicated i18n library:
 
