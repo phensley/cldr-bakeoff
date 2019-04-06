@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { join } = require('path');
+const brotli = require('iltorb');
 const zlib = require('zlib');
 const compiler = require('globalize-compiler');
 
@@ -153,44 +154,51 @@ const compile = (name, langs, source) => {
   console.log(` compile ${secs} secs`);
   console.log(`    size ${decimal(res.length)} characters  ${decimal(buf.length)} bytes`);
 
-  const data = zlib.gzipSync(buf, { level: zlib.constants.Z_BEST_COMPRESSION });
-  console.log(`    gzip ${decimal(data.length)} bytes\n`);
-
+  let data = zlib.gzipSync(buf, { level: zlib.constants.Z_BEST_COMPRESSION });
+  console.log(`    gzip ${decimal(data.length)} bytes`);
   path = join(outdir, `compiled-${source.name}-${name}.js.gz`);
   fs.writeFileSync(path, data, { encoding: 'binary' });
+
+  data = brotli.compressSync(buf, { });
+  console.log(`  brotli ${decimal(data.length)} bytes`);
+  path = join(outdir, `compiled-${source.name}-${name}.js.br`);
+  fs.writeFileSync(path, data, { encoding: 'binary' });
+
+  console.log();
 };
 
 const getlocales = (langs) =>
   ALL_LOCALES.filter(l => langs.has(l.split('-')[0]));
 
-const LITE = true;
+for (const lite of [true, false]) {
+  if (lite) {
+    const code = buildLite();
+    const source = { name: 'lite', code };
+    for (let i = 0; i < LANGS.length; i++) {
+      const langs = LANGS.slice(0, i + 1);
+      const name = langs.join('_')
+      compile(name, langs, source);
+    }
 
-if (LITE) {
-  const code = buildLite();
-  const source = { name: 'lite', code };
-  for (let i = 0; i < LANGS.length; i++) {
-    const langs = LANGS.slice(0, i + 1);
-    const name = langs.join('_')
-    compile(name, langs, source);
+    const allset = new Set(ALL_LOCALES.filter(l => l !== 'root').map(l => l.split('-')[0]));
+    let alllangs = [];
+    allset.forEach(l => alllangs.push(l));
+    compile('all', alllangs, source);
+
+  } else {
+    let source = { name: 'example-app', code: build(false) };
+    for (let i = 0; i < LANGS.length; i++) {
+      const langs = LANGS.slice(0, i + 1);
+      const name = langs.join('_')
+      compile(name, langs, source);
+    }
+
+    source = { name: 'example-app-tz', code: build(true) };
+    // one with timezones
+    compile('en', ['en'], source);
+
+    // all locales + timezones
+    compile(LANGS.join('_'), LANGS, source);
+
   }
-
-  const allset = new Set(ALL_LOCALES.filter(l => l !== 'root').map(l => l.split('-')[0]));
-  let alllangs = [];
-  allset.forEach(l => alllangs.push(l));
-  compile('all', alllangs, source);
-
-} else {
-  let source = { name: 'example-app', code: build(false) };
-  for (let i = 0; i < LANGS.length; i++) {
-    const langs = LANGS.slice(0, i + 1);
-    const name = langs.join('_')
-    compile(name, langs, source);
-  }
-
-  source = { name: 'example-app-tz', code: build(true) };
-  // one with timezones
-  compile('en', ['en'], source);
-
-  // all locales + timezones
-  compile(LANGS.join('_'), LANGS, source);
 }

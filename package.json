@@ -1,13 +1,14 @@
 {
   "private": true,
-	"scripts": {
-		"build": "node ./generate-globalize.js"
-	},
+  "scripts": {
+    "build": "node ./generate-globalize.js"
+  },
   "devDependencies": {
-    "@phensley/cldr": "next",
+    "@phensley/cldr": "0.11.4",
     "cldr-data": "34.0.0",
     "globalize": "1.4.2",
     "globalize-compiler": "1.0.0",
-    "iana-tz-data": "2018.5.0"
+    "iana-tz-data": "2018.5.0",
+    "iltorb": "^2.4.2"
   }
 }

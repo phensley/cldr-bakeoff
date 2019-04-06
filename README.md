@@ -77,19 +77,19 @@ Globalize.numberFormatter({style: "decimal"});
 Globalize.numberFormatter({style: "percent"});
 ```
 
-| Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
-| :--- | ---: | ---: |
-| en  | 1,313,128 | 63,451 |
-| en + es | 1,670,161 | 81,784 |
-| en + es + fr | 2,262,680 | 108,481 |
-| en + es + fr + de | 2,353,583 | 113,279 |
-| en + es + fr + de + it | 2,404,448 | 116,312 |
-| en + es + fr + de + it + pt | 2,559,308 | 123,755 |
-| en + es + fr + de + it + pt + ja | 2,570,455 | 124,870 |
-| en + es + fr + de + it + pt + ja + ko | 2,592,982 | 126,646 |
-| en + es + fr + de + it + pt + ja + ko + zh | 2,684,716 | 131,798 |
-| en + &lt;all timezones&gt; | 73,557,038 | 8,573,916 |
-| en + es + fr + de + it + pt + ja + ko + zh<br> + &lt; all timezones&gt; | 148,572,401 | 17,388,065 |
+| Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes | `brotli -q 11`&nbsp;bytes |
+| :--- | ---: | ---: | ---: |
+| en  | 1,313,128 | 63,451 | 42,587 |
+| en + es | 1,670,161 | 81,784 | 54,616 |
+| en + es + fr | 2,262,680 | 108,481 | 72,991 |
+| en + es + fr + de | 2,353,583 | 113,279 | 76,243 |
+| en + es + fr + de + it | 2,404,448 | 116,312 | 78,300 |
+| en + es + fr + de + it + pt | 2,559,308 | 123,755 | 83,422 |
+| en + es + fr + de + it + pt + ja | 2,570,455 | 124,870 | 84,066 |
+| en + es + fr + de + it + pt + ja + ko | 2,592,982 | 126,646 | 85,412 |
+| en + es + fr + de + it + pt + ja + ko + zh | 2,684,716 | 131,798 | 88,985 |
+| en + &lt;all timezones&gt; | 73,557,038 | 8,573,916 | 684,541 |
+| en + es + fr + de + it + pt + ja + ko + zh<br> + &lt; all timezones&gt; | 148,572,401 | 17,388,065 | 1,368,767 |
 
 #### Sizes for stripped down "lite" example application
 
@@ -111,18 +111,18 @@ Globalize.currencyFormatter('JPY', {});
 Globalize.unitFormatter('megabyte', {});
 ```
 
-| Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
-| :--- | ---: | ---: |
-| en | 398,389 | 22,121 |
-| en + es | 504,335 | 28,396 |
-| en + es + fr | 679,555 | 37,451 |
-| en + es + fr + de | 706,102 | 39,107 |
-| en + es + fr + de + it | 721,357 | 40,260 |
-| en + es + fr + de + it + pt | 767,507 | 42,835 |
-| en + es + fr + de + it + pt + ja | 770,959 | 43,195 |
-| en + es + fr + de + it + pt + ja + ko | 778,038 | 43,746 |
-| en + es + fr + de + it + pt + ja + ko + zh | 806,628 | 45,595 |
-| all locales | 1,421,762 | 94,458 |
+| Languages&nbsp;(all&nbsp;regions) | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes | `brotli -q 11`&nbsp;bytes |
+| :--- | ---: | ---: | ---: |
+| en | 398,389 | 22,121 | 15,172 |
+| en + es | 504,335 | 28,396 | 19,447 |
+| en + es + fr | 679,555 | 37,451 | 25,664 |
+| en + es + fr + de | 706,102 | 39,107 | 26,769 |
+| en + es + fr + de + it | 721,357 | 40,260 | 27,501 |
+| en + es + fr + de + it + pt | 767,507 | 42,835 | 29,313 |
+| en + es + fr + de + it + pt + ja | 770,959 | 43,195 | 29,482 |
+| en + es + fr + de + it + pt + ja + ko | 778,038 | 43,746 | 29,861 |
+| en + es + fr + de + it + pt + ja + ko + zh | 806,628 | 45,595 | 31,121 |
+| all locales | 1,421,762 | 94,458 | 63,083 |
 
 ### @phensley/cldr
 
@@ -136,15 +136,15 @@ The sizes below would be identical for any application.
 
 Sizes are generated using `@phensley/cldr 0.11.3-alpha.0` which uses `cldr v35` data.
 
-| Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes |
-| :--- | ---: | ---: |
-| @phensley/cldr library | 338,524 | 114,262 |
-| English resource pack | 199,507 | 44,058 |
-| Spanish resource pack | 180,332 | 43,691 |
-| French resource pack | 164,791 | 37,085 |
-| German resource pack | 139,707 | 23,492 |
-| Italian resource pack | 130,008 | 22,282 |
-| Portuguese resource pack | 173,927 | 38,894 |
-| Japanese resource pack | 138,765 | 20,628 |
-| Korean resource pack | 132,312 | 23,768 |
-| Chinese resource pack | 270,318 | 53,570 |
+| Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes | `brotli -q 11`&nbsp;bytes |
+| :--- | ---: | ---: | ---: |
+| @phensley/cldr library | 335,495 | 113,753 | 92,381 |
+| English resource pack | 199,499 | 44,052 | 36,003 |
+| Spanish resource pack | 180,334 | 43,686 | 37,434 |
+| French resource pack | 164,783 | 37,080 | 30,212 |
+| German resource pack | 139,699 | 23,487 | 18,835 |
+| Italian resource pack | 130,000 | 22,227 | 18,118 |
+| Portuguese resource pack | 173,919 | 38,890 | 30,881 |
+| Japanese resource pack | 138,757 | 20,624 | 16,994 |
+| Korean resource pack | 132,304 | 23,761 | 19,031 |
+| Chinese resource pack | 270,310 | 53,564 | 37,854 |
