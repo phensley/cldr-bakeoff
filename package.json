@@ -1,10 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "build": "node ./generate-globalize.js"
+    "build:cldrengine": "cldr-compiler pack -l en,es,fr,de,it,pt,ja,ko,zh -o packs -c ./cldr-engine-config.json",
+    "build:globalize": "node ./generate-globalize.js"
   },
   "devDependencies": {
-    "@phensley/cldr": "0.11.4",
+    "@phensley/cldr": "0.13.3-alpha.0",
+    "@phensley/cldr-compiler": "0.13.3-alpha.0",
     "cldr-data": "34.0.0",
     "globalize": "1.4.2",
     "globalize-compiler": "1.0.0",

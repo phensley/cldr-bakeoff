@@ -1,0 +1,12 @@
+{
+  "calendars": [],
+  "language-id": ["en", "es", "fr", "de", "it", "ja", "ko", "zh"],
+  "script-id": ["Latn"],
+  "region-id": [],
+  "currency-id": ["USD", "EUR", "GBP", "JPY"],
+  "number-system-name": [],
+  "unit-id": [
+		"bit", "kilobit", "megabit", "gigabit", "terabit", "petabit",
+		"byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte"
+  ]
+}

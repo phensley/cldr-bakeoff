@@ -134,17 +134,39 @@ The sizes below would be identical for any application.
 
 **Note:** The runtime library includes all CLDR functionality that is implemented, and each resource pack contains all data required for all scripts and regions for a single language, including **all timezones, all units, names, multiple calendars, and more**. No build time data extraction or pre-compilation steps are required.
 
-Sizes are generated using `@phensley/cldr 0.11.3-alpha.0` which uses `cldr v35` data.
+Sizes are generated using version `0.13.3-alpha.0` which uses `cldr v35` data.
+
+#### Sizes for full functionality
+
+This includes the full functionality of the library, importing the `@phensley/cldr` package which uses the [default configuration](https://raw.githubusercontent.com/phensley/cldr-engine/master/packages/cldr/src/config.json).
+
 
 | Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes | `brotli -q 11`&nbsp;bytes |
 | :--- | ---: | ---: | ---: |
-| @phensley/cldr library | 335,495 | 113,753 | 92,381 |
-| English resource pack | 199,499 | 44,052 | 36,003 |
-| Spanish resource pack | 180,334 | 43,686 | 37,434 |
-| French resource pack | 164,783 | 37,080 | 30,212 |
-| German resource pack | 139,699 | 23,487 | 18,835 |
-| Italian resource pack | 130,000 | 22,227 | 18,118 |
-| Portuguese resource pack | 173,919 | 38,890 | 30,881 |
-| Japanese resource pack | 138,757 | 20,624 | 16,994 |
-| Korean resource pack | 132,304 | 23,761 | 19,031 |
-| Chinese resource pack | 270,310 | 53,564 | 37,854 |
+| @phensley/cldr library | 350,174 | 117,478 | 94,930 |
+| English resource pack | 197,481 | 45,129 | 37,271 |
+| Spanish resource pack | 178,596 | 43,720 | 37,409 |
+| French resource pack | 163,210 | 36,945 | 30,450 |
+| German resource pack | 138,281 | 23,470 | 18,917 |
+| Italian resource pack | 128,587 | 22,292 | 18,120 |
+| Portuguese resource pack | 172,461 | 38,881 | 30,854 |
+| Japanese resource pack | 137,344 | 20,658 | 17,042 |
+| Korean resource pack | 130,891 | 23,778 | 19,044 |
+| Chinese resource pack | 276,426 | 53,524 | 37,757 |
+
+#### Sizes for customized
+
+This uses a [custom configuration](./cldr-engine-config.json) and the `@phensley/cldr-core` package to reduce the size of the library and resource packs. Where possible, only the data required by the application is included.
+
+| Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes | `brotli -q 11`&nbsp;bytes |
+| :--- | ---: | ---: | ---: |
+| @phensley/cldr-core library | 324,292 | 109,280 | 89,776 |
+| English resource pack | 54,269 | 15,079 | 12,978 |
+| Spanish resource pack | 53,641 | 16,831 | 14,691 |
+| French resource pack | 42,876 | 11,371 | 9,708 |
+| German resource pack | 31,368 | 7,063 | 6,216 |
+| Italian resource pack | 31,298 | 6,566 | 5,771 |
+| Portuguese resource pack | 50,410 | 12,985 | 11,041 |
+| Japanese resource pack | 33,930 | 6,457 | 5,526 |
+| Korean resource pack | 32,163 | 6,602 | 5,829 |
+| Chinese resource pack | 68,111 | 15,766 | 12,883 |
