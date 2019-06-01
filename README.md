@@ -164,7 +164,7 @@ This uses a [custom configuration](./cldr-engine-config.json) and the `@phensley
 
 | Entity  | UTF-8&nbsp;Bytes | `gzip --best`&nbsp;bytes | `brotli -q 11`&nbsp;bytes |
 | :--- | ---: | ---: | ---: |
-| @phensley/cldr-core library | 344,503 | 100,423 | 80,214 |
+| @phensley/cldr-core library | 344,833 | 100,547 | 80,300 |
 | English resource pack | 53,556 | 9,193 | 7,017 |
 | Spanish resource pack | 48,167 | 9,856 | 7,697 |
 | French resource pack | 36,125 | 7,602 | 6,032 |
