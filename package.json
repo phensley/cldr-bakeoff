@@ -5,12 +5,15 @@
     "build:globalize": "node ./generate-globalize.js"
   },
   "devDependencies": {
-    "@phensley/cldr": "0.13.3-alpha.0",
-    "@phensley/cldr-compiler": "0.13.3-alpha.0",
+    "@phensley/cldr": "0.15.2",
+    "@phensley/cldr-compiler": "0.15.2",
     "cldr-data": "34.0.0",
     "globalize": "1.4.2",
     "globalize-compiler": "1.0.0",
     "iana-tz-data": "2018.5.0",
-    "iltorb": "^2.4.2"
+    "iltorb": "^2.4.3",
+    "package-build-stats": "^4.1.0",
+    "webpack": "^4.32.2",
+    "write-file-webpack-plugin": "^4.5.0"
   }
 }
